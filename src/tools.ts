@@ -288,11 +288,6 @@ export const tools = [
     inputSchema: { type: "object", properties: { page: { type: "number" } } },
   },
   {
-    name: "list_sold_posts",
-    description: "List purchases of the token owner's posts",
-    inputSchema: { type: "object", properties: { page: { type: "number" } } },
-  },
-  {
     name: "list_sold_subscriptions",
     description: "List sold subscriptions",
     inputSchema: { type: "object", properties: { page: { type: "number" } } },

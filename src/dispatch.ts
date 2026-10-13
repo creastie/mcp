@@ -116,10 +116,6 @@ const routes: Record<string, RouteSpec> = {
     method: "GET",
     path: (args) => `/donations${buildQuery({ page: args.page })}`,
   },
-  list_sold_posts: {
-    method: "GET",
-    path: (args) => `/sold-posts${buildQuery({ page: args.page })}`,
-  },
   list_sold_subscriptions: {
     method: "GET",
     path: (args) => `/sold-subscriptions${buildQuery({ page: args.page })}`,
