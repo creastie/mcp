@@ -14,7 +14,8 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts",
-    "prepare": "npm run build"
+    "prepare": "npm run build",
+    "test": "tsc && node --test dist/upload.test.js dist/client.test.js"
   },
   "repository": {
     "type": "git",

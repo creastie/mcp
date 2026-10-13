@@ -27,10 +27,32 @@ export class CreastieApiClient {
       headers["Idempotency-Key"] = opts.idempotencyKey ?? randomUUID();
     }
 
+    return this.send<T>(method, path, headers, body === undefined ? undefined : JSON.stringify(body));
+  }
+
+  /**
+   * POST multipart/form-data. Content-Type is intentionally not set so fetch
+   * generates the multipart boundary.
+   */
+  async uploadMultipart<T = unknown>(path: string, formData: FormData): Promise<T> {
+    const headers: Record<string, string> = {
+      Authorization: `Bearer ${this.options.token}`,
+      Accept: "application/json",
+    };
+
+    return this.send<T>("POST", path, headers, formData);
+  }
+
+  private async send<T>(
+    method: string,
+    path: string,
+    headers: Record<string, string>,
+    body: string | FormData | undefined,
+  ): Promise<T> {
     const response = await fetch(`${this.options.baseUrl.replace(/\/$/, "")}${path}`, {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body,
     });
 
     const text = await response.text();
