@@ -1,6 +1,17 @@
 import { CreastieApiClient, omitKeys } from "./client.js";
 import { getUploadProgress, uploadResumableFile } from "./upload.js";
 
+function buildQuery(params: Record<string, unknown>): string {
+  const search = new URLSearchParams();
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && value !== "") {
+      search.set(key, String(value));
+    }
+  }
+  const qs = search.toString();
+  return qs ? `?${qs}` : "";
+}
+
 export async function dispatchTool(
   client: CreastieApiClient,
   name: string,
@@ -65,6 +76,30 @@ export async function dispatchTool(
       );
     case "delete_media":
       return client.request("DELETE", `/my/media/${args.uuid}`);
+    case "follow":
+      return client.request("POST", `/users/${encodeURIComponent(String(args.nickname))}/follow`);
+    case "unfollow":
+      return client.request("DELETE", `/users/${encodeURIComponent(String(args.nickname))}/follow`);
+    case "list_followers":
+      return client.request("GET", `/followers${buildQuery({ page: args.page })}`);
+    case "list_follows":
+      return client.request("GET", `/follows${buildQuery({ page: args.page })}`);
+    case "list_blacklist":
+      return client.request("GET", `/blacklist${buildQuery({ page: args.page })}`);
+    case "block_user":
+      return client.request("POST", "/blacklist", { blocked_id: args.blocked_id });
+    case "unblock_user":
+      return client.request("DELETE", `/blacklist/${args.blocked_id}`);
+    case "list_donations":
+      return client.request(
+        "GET",
+        `/donations${buildQuery({ product_type: args.product_type, page: args.page })}`,
+      );
+    case "list_sold_subscriptions":
+      return client.request(
+        "GET",
+        `/sold-subscriptions${buildQuery({ page: args.page })}`,
+      );
     default:
       throw new Error(`Unknown tool: ${name}`);
   }

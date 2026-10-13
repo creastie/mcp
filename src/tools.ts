@@ -231,4 +231,71 @@ export const tools = [
       required: ["uuid"],
     },
   },
+  {
+    name: "follow",
+    description: "Follow a user by nickname",
+    inputSchema: {
+      type: "object",
+      properties: { nickname: { type: "string" } },
+      required: ["nickname"],
+    },
+  },
+  {
+    name: "unfollow",
+    description: "Unfollow a user by nickname",
+    inputSchema: {
+      type: "object",
+      properties: { nickname: { type: "string" } },
+      required: ["nickname"],
+    },
+  },
+  {
+    name: "list_followers",
+    description: "List own followers",
+    inputSchema: { type: "object", properties: { page: { type: "number" } } },
+  },
+  {
+    name: "list_follows",
+    description: "List users the token owner follows",
+    inputSchema: { type: "object", properties: { page: { type: "number" } } },
+  },
+  {
+    name: "list_blacklist",
+    description: "List own blacklist (user-level block, not admin ban)",
+    inputSchema: { type: "object", properties: { page: { type: "number" } } },
+  },
+  {
+    name: "block_user",
+    description: "Add a user to own blacklist (not admin ban)",
+    inputSchema: {
+      type: "object",
+      properties: { blocked_id: { type: "number" } },
+      required: ["blocked_id"],
+    },
+  },
+  {
+    name: "unblock_user",
+    description: "Remove a user from own blacklist by blocked user id",
+    inputSchema: {
+      type: "object",
+      properties: { blocked_id: { type: "number" } },
+      required: ["blocked_id"],
+    },
+  },
+  {
+    name: "list_donations",
+    description: "List donations and post sales, optionally by product_type",
+    inputSchema: {
+      type: "object",
+      properties: {
+        product_type: { type: "string" },
+        page: { type: "number" },
+      },
+    },
+  },
+  {
+    name: "list_sold_subscriptions",
+    description: "List sold subscriptions",
+    inputSchema: { type: "object", properties: { page: { type: "number" } } },
+  },
 ] as const;
