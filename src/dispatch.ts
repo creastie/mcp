@@ -1,4 +1,5 @@
 import { CreastieApiClient, omitKeys } from "./client.js";
+import { getUploadProgress, uploadResumableFile } from "./upload.js";
 
 export async function dispatchTool(
   client: CreastieApiClient,
@@ -51,6 +52,19 @@ export async function dispatchTool(
       return client.request("PUT", `/posts/${args.slug}`, {
         comments_enabled: args.comments_enabled,
       });
+    case "upload_media":
+      return uploadResumableFile(client, String(args.path), {
+        resumableId: args.resumable_id ? String(args.resumable_id) : undefined,
+      });
+    case "media_upload_status":
+      return getUploadProgress(String(args.resumable_id)) ?? { message: "unknown session" };
+    case "list_media":
+      return client.request(
+        "GET",
+        `/my/media/${args.type}${args.page ? `?page=${args.page}` : ""}`,
+      );
+    case "delete_media":
+      return client.request("DELETE", `/my/media/${args.uuid}`);
     default:
       throw new Error(`Unknown tool: ${name}`);
   }

@@ -1,3 +1,18 @@
+const blocksSchema = {
+  type: "array",
+  items: {
+    type: "object",
+    properties: {
+      text: { type: "string" },
+      media_id: { type: "number" },
+      poll_question: { type: "string" },
+      poll_options: { type: "array", items: { type: "string" } },
+      poll_multiple_select: { type: "boolean" },
+      poll_close_at: { type: "string" },
+    },
+  },
+} as const;
+
 export const tools = [
   {
     name: "list_subscriptions",
@@ -61,6 +76,8 @@ export const tools = [
         comments_enabled: { type: "boolean" },
         publish_at: { type: "string" },
         tags: { type: "array", items: { type: "string" } },
+        poster_id: { type: "number" },
+        blocks: blocksSchema,
       },
       required: ["title", "price"],
     },
@@ -75,6 +92,8 @@ export const tools = [
         title: { type: "string" },
         text: { type: "string" },
         comments_enabled: { type: "boolean" },
+        poster_id: { type: "number" },
+        blocks: blocksSchema,
       },
       required: ["slug"],
     },
@@ -168,6 +187,48 @@ export const tools = [
         comments_enabled: { type: "boolean" },
       },
       required: ["slug", "comments_enabled"],
+    },
+  },
+  {
+    name: "upload_media",
+    description: "Upload a local file to media library (resumable chunks)",
+    inputSchema: {
+      type: "object",
+      properties: {
+        path: { type: "string" },
+        resumable_id: { type: "string" },
+      },
+      required: ["path"],
+    },
+  },
+  {
+    name: "media_upload_status",
+    description: "Get progress of a resumable upload session",
+    inputSchema: {
+      type: "object",
+      properties: { resumable_id: { type: "string" } },
+      required: ["resumable_id"],
+    },
+  },
+  {
+    name: "list_media",
+    description: "List own media by type",
+    inputSchema: {
+      type: "object",
+      properties: {
+        type: { type: "string", enum: ["image", "video", "audio", "file"] },
+        page: { type: "number" },
+      },
+      required: ["type"],
+    },
+  },
+  {
+    name: "delete_media",
+    description: "Delete media by uuid",
+    inputSchema: {
+      type: "object",
+      properties: { uuid: { type: "string" } },
+      required: ["uuid"],
     },
   },
 ] as const;
