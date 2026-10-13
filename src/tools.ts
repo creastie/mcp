@@ -261,12 +261,12 @@ export const tools = [
   },
   {
     name: "list_blacklist",
-    description: "List own blacklist (user-level block, not admin ban)",
+    description: "List own blacklist",
     inputSchema: { type: "object", properties: { page: { type: "number" } } },
   },
   {
     name: "block_user",
-    description: "Add a user to own blacklist (not admin ban)",
+    description: "Add a user to own blacklist",
     inputSchema: {
       type: "object",
       properties: { blocked_id: { type: "number" } },
