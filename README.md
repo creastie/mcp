@@ -1,14 +1,14 @@
 # Creastie MCP
 
-Stdio [MCP](https://modelcontextprotocol.io/) server for the Creastie creator API. Use with Cursor, Claude Desktop, or other MCP clients to manage posts, subscriptions, and comments (migration / blog automation).
+Stdio [MCP](https://modelcontextprotocol.io/)-сервер для API Creastie. Подключается к Cursor, Claude Desktop и другим MCP-клиентам, чтобы через ИИ управлять постами, подписками и комментариями — для миграции контента и автоматизации блога.
 
-## Requirements
+## Требования
 
 - Node.js 20+
-- Creastie account
-- MCP Personal Access Token from the API: `POST /mcp/tokens` (authenticated)
+- Аккаунт Creastie
+- MCP Personal Access Token: `POST /mcp/tokens` (нужна авторизация)
 
-## Install
+## Установка
 
 ```bash
 git clone https://github.com/creastie/mcp.git
@@ -17,14 +17,14 @@ npm install
 npm run build
 ```
 
-Or run from source during development:
+Для разработки:
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Cursor / Claude Desktop config
+## Настройка Cursor / Claude Desktop
 
 ```json
 {
@@ -41,31 +41,31 @@ npm run dev
 }
 ```
 
-Never put the token in prompts — only in MCP env config.
+Токен храните только в env MCP-конфига, не в промптах.
 
-## Env
+## Переменные окружения
 
-| Variable | Description |
-|----------|-------------|
-| `CREASTIE_API_URL` | API base URL (e.g. `https://api.creastie.com`) |
-| `CREASTIE_API_TOKEN` | Plaintext token from `POST /mcp/tokens` |
+| Переменная | Описание |
+|------------|----------|
+| `CREASTIE_API_URL` | Базовый URL API (например `https://api.creastie.com`) |
+| `CREASTIE_API_TOKEN` | Plaintext-токен из `POST /mcp/tokens` |
 
-## Tools
+## Инструменты (tools)
 
-Subscriptions: `list_subscriptions`, `create_subscription`, `update_subscription`, `delete_subscription`  
-Posts: `list_posts`, `create_post`, `update_post`, `delete_post`, `publish_post`, `pin_post`, `unpin_post`  
-Comments: `list_comments`, `create_comment`, `update_comment`, `delete_comment`, `set_post_comments_enabled`
+Подписки: `list_subscriptions`, `create_subscription`, `update_subscription`, `delete_subscription`  
+Посты: `list_posts`, `create_post`, `update_post`, `delete_post`, `publish_post`, `pin_post`, `unpin_post`  
+Комментарии: `list_comments`, `create_comment`, `update_comment`, `delete_comment`, `set_post_comments_enabled`
 
-Create tools send `Idempotency-Key` automatically.
+На create клиент сам отправляет `Idempotency-Key`.
 
-Token scopes: `mcp` (all) or `mcp:posts` / `mcp:subscriptions` / `mcp:comments`.
+Scopes токена: `mcp` (всё) или `mcp:posts` / `mcp:subscriptions` / `mcp:comments`.
 
-## Token API
+## API токенов
 
-| Method | Path | Description |
-|--------|------|-------------|
-| `GET` | `/mcp/tokens` | List tokens (no plaintext) |
-| `POST` | `/mcp/tokens` | Create (`name`, optional `abilities`, `expires_at`) |
-| `DELETE` | `/mcp/tokens/{id}` | Revoke |
+| Метод | Path | Описание |
+|-------|------|----------|
+| `GET` | `/mcp/tokens` | Список токенов (без plaintext) |
+| `POST` | `/mcp/tokens` | Создать (`name`, опционально `abilities`, `expires_at`) |
+| `DELETE` | `/mcp/tokens/{id}` | Отозвать |
 
-See Creastie API docs: `docs/user-mcp/` in the API repository.
+Документация API: `docs/user-mcp/` в репозитории Creastie API.
