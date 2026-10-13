@@ -284,14 +284,13 @@ export const tools = [
   },
   {
     name: "list_donations",
-    description: "List donations and post sales, optionally by product_type",
-    inputSchema: {
-      type: "object",
-      properties: {
-        product_type: { type: "string" },
-        page: { type: "number" },
-      },
-    },
+    description: "List donations to the token owner's profile",
+    inputSchema: { type: "object", properties: { page: { type: "number" } } },
+  },
+  {
+    name: "list_sold_posts",
+    description: "List purchases of the token owner's posts",
+    inputSchema: { type: "object", properties: { page: { type: "number" } } },
   },
   {
     name: "list_sold_subscriptions",
