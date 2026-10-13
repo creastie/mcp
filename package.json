@@ -1,0 +1,39 @@
+{
+  "name": "@creastie/mcp",
+  "version": "0.1.0",
+  "description": "Creastie MCP server for managing posts, subscriptions, and comments via AI clients",
+  "type": "module",
+  "bin": {
+    "creastie-mcp": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts",
+    "prepare": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creastie/mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/creastie/mcp/issues"
+  },
+  "homepage": "https://github.com/creastie/mcp#readme",
+  "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
