@@ -108,6 +108,15 @@ function readServerPercent(response: unknown): number | undefined {
   return undefined;
 }
 
+/** Final chunk must return a created media payload (numeric `id`), not mid-upload progress. */
+function readMediaId(response: unknown): number | undefined {
+  if (response && typeof response === "object" && "id" in response) {
+    const id = Number((response as { id: unknown }).id);
+    if (Number.isInteger(id) && id > 0) return id;
+  }
+  return undefined;
+}
+
 /**
  * Upload a local file to `POST /my/media/upload` using the ResumableJS chunk protocol.
  * Resolves with the response of the final chunk (the created media payload).
@@ -138,6 +147,10 @@ export async function uploadResumableFile(
 
     state.doneChunks = chunk.number;
     state.serverPercent = readServerPercent(lastResponse);
+  }
+
+  if (readMediaId(lastResponse) === undefined) {
+    throw new Error("Upload finished without media id in final response");
   }
 
   state.complete = true;

@@ -140,6 +140,21 @@ describe("upload", () => {
     assert.equal(getUploadProgress("nope"), null);
   });
 
+  it("rejects when final chunk response is progress-only", async () => {
+    const id = "progress-only-final";
+    const client = {
+      async uploadMultipart() {
+        return { done: 100, status: true };
+      },
+    } as unknown as CreastieApiClient;
+
+    await assert.rejects(
+      uploadResumableFile(client, file1kb, { resumableId: id }),
+      /media id/i,
+    );
+    assert.equal(getUploadProgress(id)?.doneChunks, 1);
+  });
+
   it("propagates upload errors and keeps partial progress", async () => {
     const id = "failing-id";
     let n = 0;
